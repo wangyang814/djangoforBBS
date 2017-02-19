@@ -1,0 +1,42 @@
+{%extends 'http1.html' %}
+{% load comments %}
+{%  block page-content %}
+<div class="contents" xmlns="http://www.w3.org/1999/html">
+    <br>
+    <p style="font-size: large;text-align: center">{{ bbs_obj.title }}</p>
+    <hr>
+    {{ bbs_obj.content | safe}}
+    <br>
+    <br>
+
+    {% get_comment_count for bbs_obj as comment_count %}
+     <p> {{ comment_count }} comments</p>
+    <br>
+    {% if user.is_authenticated %}
+    <form action="/sub_comt/" method="POST">
+
+    <textarea cols="80" rows="3" name="comment"></textarea>
+    <input type="hidden" name="bbs_id" value="{{ bbs_obj.id }}" />
+    <input type="submit" value="Add comment" id="id_submit" />
+    </form>
+    {% else %}
+    <p>
+    <a href="/login/">please login first</a>
+    </p>
+    {% endif %}
+
+    {% get_comment_list for bbs_obj as comment_list %}
+    {% for comment in comment_list reversed  %}
+
+        {{ comment.submit_date }}
+        <br>
+        {{ comment.comment }}
+        <hr>
+     {% endfor %}
+
+</div>
+{% endblock %}
+
+
+
+

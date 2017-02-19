@@ -1,0 +1,15 @@
+{% extends "http1.html" %}
+{% block page-content %}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+</head>
+<body>
+<form method="POST">
+{{ form.as_p }}
+    <input type="submit" value="add">
+</form>
+</body>
+</html>
+{% endblock %}

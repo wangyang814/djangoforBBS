@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/html">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Navbar Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/static/css/navbar.css" rel="stylesheet">
+	<link href="/static/css/cust.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+    <div class="container">
+
+      <!-- Static navbar -->
+      <nav class="navbar navbar-default" >
+        <div class="container-fluid" >
+          <div class="navbar-header" style="background-color: cornflowerblue;color: whitesmoke" >
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+            </button>
+            <a class="navbar-brand"  style="background-color: cornflowerblue; color: whitesmoke;"  href="/">王杨的论坛</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse" style="background-color: cornflowerblue;color: whitesmoke">
+            <ul class="nav navbar-nav" >
+              {% for aa in cate %}
+                  {% ifequal aa.id cate_id %}
+              <li class="active" ><a href="/category/{{ aa.id }}" style="background-color: blue;color: whitesmoke">{{ aa.name }}</a></li>
+                  {% else %}
+              <li class="#"><a href="/category/{{ aa.id }}" style="background-color: cornflowerblue;color: whitesmoke">{{ aa.name }}</a></li>
+                  {% endifequal %}
+              {% endfor %}
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="background-color: cornflowerblue;color: whitesmoke" >
+			{% if user.is_authenticated and "BBS.add_category" in perms%}
+
+            <li><a href="/MagCate/" style="background-color: cornflowerblue;color: whitesmoke">板块管理</a></li>
+              <li><a href="/pub/" style="background-color: cornflowerblue;color: whitesmoke">发帖</a></li>
+                <li><a href="/search/" style="background-color: cornflowerblue;color: whitesmoke">我的帖子</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="background-color: cornflowerblue;color: whitesmoke">{{ user.username }} <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="/logout/" style="background-color: cornflowerblue;color: whitesmoke">注销</a></li>
+                {% elif user.is_authenticated %}
+                <li><a href="/pub/" style="background-color: cornflowerblue;color: whitesmoke">发帖</a></li>
+                <li><a href="/search/" style="background-color: cornflowerblue;color: whitesmoke">我的帖子</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="background-color: cornflowerblue;color: whitesmoke">{{ user.username }} <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="/logout/" style="background-color: cornflowerblue;color: whitesmoke">注销</a></li>
+
+            {% else %}
+			<li><a href="/login/" style="background-color: cornflowerblue;color: whitesmoke">登录</a></li>
+			<li><a href="/register/"style="background-color: cornflowerblue;color: whitesmoke" >注册</a></li>
+			 {% endif %}
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+      </nav>
+      <div class="container center-container-hx" style="background-color: #FDFDFD;margin-top: -20px;">
+              {%  block page-content %}
+              <div class="contents">
+                  {% for bbs in aa %}
+                      <hr>
+                      <a  href="/detail/{{ bbs.id }}/" >{{ bbs.title }}</a>
+                      <br>
+                      {{ bbs.summary }}
+                  {% endfor %}
+              </div>
+              {% endblock %}
+       </div>
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+  </body>
+</html>
